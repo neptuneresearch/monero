@@ -4555,12 +4555,19 @@ void Blockchain::archive_block(block& b, bool is_alt_block, std::pair<uint64_t,u
   // ## read archive configuration
   std::string filename_archive = archive_output_filename();
   std::string output_field_delimiter = "\t";
-  uint64_t archive_version = 11;
+  uint64_t archive_version = 17;
 
   // ## alt_chain_info
   std::pair<uint64_t,std::string> altchaininfo = archive_alt_chain_info();
   uint64_t altchaininfo_length = altchaininfo.first;
   std::string altchaininfo_json = altchaininfo.second;
+
+  // ### only record alt_chain_info when it changes, to save space
+  static std::string altchaininfo_json_last;
+  if(altchaininfo_json_last === altchaininfo_json) {
+    altchaininfo_json = "[{\"diff\":false}]";
+  }
+  altchaininfo_json_last = altchaininfo_json;
 
   // ## sync state
   uint64_t archive_current_height = archive_sync_state.first;

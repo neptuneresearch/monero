@@ -28,7 +28,7 @@
 //
 // Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
 //
-// ** Patched with MonerodArchive v11 by Neptune Research
+// ** Patched with MonerodArchive v17 by Neptune Research
 // ** SPDX-License-Identifier: BSD-3-Clause
 
 #pragma once
