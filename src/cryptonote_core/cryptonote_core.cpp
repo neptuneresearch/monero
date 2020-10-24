@@ -27,6 +27,9 @@
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 // Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
+//
+// ** Patched with MonerodArchive v17 by Neptune Research
+// ** SPDX-License-Identifier: BSD-3-Clause
 
 #include <boost/algorithm/string.hpp>
 #include <boost/uuid/nil_generator.hpp>
@@ -1476,7 +1479,10 @@ namespace cryptonote
       m_miner.resume();
       return false;
     }
-    m_blockchain_storage.add_new_block(b, bvc);
+    // <MonerodArchive (IsNodeSynced?1)>
+    std::pair<uint64_t,uint64_t> archive_sync_state = std::make_pair(get_current_blockchain_height(), get_target_blockchain_height());
+    m_blockchain_storage.add_new_block(b, bvc, archive_sync_state);
+    // </MonerodArchive>
     cleanup_handle_incoming_blocks(true);
     //anyway - update miner template
     update_miner_block_template();
@@ -1527,7 +1533,10 @@ namespace cryptonote
   //-----------------------------------------------------------------------------------------------
   bool core::add_new_block(const block& b, block_verification_context& bvc)
   {
-    return m_blockchain_storage.add_new_block(b, bvc);
+    // <MonerodArchive (IsNodeSynced?2)>
+    std::pair<uint64_t,uint64_t> archive_sync_state = std::make_pair(get_current_blockchain_height(), get_target_blockchain_height());
+    return m_blockchain_storage.add_new_block(b, bvc, archive_sync_state);
+    // </MonerodArchive>
   }
 
   //-----------------------------------------------------------------------------------------------

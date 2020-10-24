@@ -27,6 +27,9 @@
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 // Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
+//
+// ** Patched with MonerodArchive v17 by Neptune Research
+// ** SPDX-License-Identifier: BSD-3-Clause
 
 #pragma once
 #include <boost/asio/io_service.hpp>
@@ -329,6 +332,9 @@ namespace cryptonote
      */
     size_t recalculate_difficulties(boost::optional<uint64_t> start_height = boost::none);
 
+    /*
+     * <MonerodArchive>
+     */
     /**
      * @brief adds a block to the blockchain
      *
@@ -342,7 +348,25 @@ namespace cryptonote
      *
      * @return true on successful addition to the blockchain, else false
      */
-    bool add_new_block(const block& bl_, block_verification_context& bvc);
+    bool add_new_block(const block& bl_, block_verification_context& bvc, std::pair<uint64_t,uint64_t> archive_sync_state);
+
+    /**
+     * @copydoc Blockchain::archive_block
+     */
+        void archive_block(block& b, bool is_alt_block, std::pair<uint64_t,uint64_t> archive_sync_state);
+
+    /**
+     * @copydoc Blockchain::archive_alt_chain_info
+     */
+        std::pair<uint64_t,std::string> archive_alt_chain_info();
+
+    /**
+     * @copydoc Blockchain::archive_output_filename
+     */
+        std::string archive_output_filename();
+    /*
+     * </MonerodArchive>
+    */
 
     /**
      * @brief clears the blockchain and starts a new one
