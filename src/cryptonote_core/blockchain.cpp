@@ -4564,7 +4564,7 @@ void Blockchain::archive_block(block& b, bool is_alt_block, std::pair<uint64_t,u
 
   // ### only record alt_chain_info when it changes, to save space
   static std::string altchaininfo_json_last;
-  if(altchaininfo_json_last === altchaininfo_json) {
+  if(altchaininfo_json_last == altchaininfo_json) {
     altchaininfo_json = "[{\"diff\":false}]";
   }
   altchaininfo_json_last = altchaininfo_json;
